@@ -1,5 +1,7 @@
 <script lang="ts">
+	export let item
 	const data = ['category 1', 'category 2', 'category 3']
+
 	let password,eye,eyeSlash
 	const toggleVisibility = () => {
 		if(password.type === 'password') {
@@ -11,7 +13,7 @@
 			eye.classList.remove('hidden')
 			eyeSlash.classList.add('hidden')
 		}
-	} 
+	}
 </script>
 
 <nav class="py-2 flex items-center justify-around">
@@ -30,14 +32,13 @@
 
 <div class="w-screen flex justify-center">
 	<main class="w-1/2">
-		
+		{`${item.username} and ${item.password}`}
 		<div class="mt-16 mb-8">
 			<h2 class="text-center font-bold text-4xl tracking-wide">Login to Your Account</h2>
 			<p class="text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis molestias praesentium sapiente obcaecati rem cum? Veritatis iure corporis pariatur animi?</p>
 		</div>
 
-		<form on:submit|preventDefault={() => console.log(`submitting...`)} 
-		class="flex justify-center items-center flex-col gap-y-10 p-10">
+		<form action="/login" method="POST" class="flex justify-center items-center flex-col gap-y-10 p-10">
 			<input type="text" name="user-id" placeholder="Teacher/Student ID" class="py-2 px-4 w-1/2 rounded outline-none border border-black">
 			<div class="w-1/2 flex">
 				<input type="password" name="user-password" placeholder="Password" bind:this={password} class="py-2 pl-4 pr-10 w-full rounded outline-none border border-black">
