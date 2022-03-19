@@ -36,7 +36,7 @@ export async function post({ request }) {
 	return {
 		status: 303,
 		headers: {
-			location: '/login'
+			location: '/'
 		}
 	};
 }

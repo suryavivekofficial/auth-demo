@@ -1,9 +1,5 @@
-<script lang="ts" >
+<script lang="ts">
 export let users
-console.log('In frontend');
-
-console.log(users);
-
 </script>
 
 <a href="/login">
@@ -11,8 +7,8 @@ console.log(users);
   Click here to go to login page
 </h1>
 </a>
-<h1>Registered Users</h1>
-<!-- 
-{#each users as user }
-	<h3>{user.name} and {user.password}</h3>
-{/each} -->
+<h1 class="text-center my-12 text-2xl">Registered Users</h1>
+
+{#each users as user, index }
+	<h3 class="text-center my-4">{index+1}.{user.name} and {user.password}</h3>
+{/each}
