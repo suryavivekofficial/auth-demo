@@ -1,5 +1,5 @@
 <script lang="ts">
-export let users
+	export let users
 </script>
 
 <a href="/login">
