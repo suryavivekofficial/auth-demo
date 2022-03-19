@@ -1,5 +1,18 @@
 import type { RequestHandler } from '@sveltejs/kit';
-let item = {};
+
+import { PrismaClient } from '@prisma/client';
+const prisma = new PrismaClient();
+
+let item: { username: string; password: string };
+
+async function writeData(item: { username: string; password: string }) {
+	const newUser = await prisma.user.create({
+		data: {
+			name: item.username,
+			password: item.password
+		}
+	});
+}
 
 export const get: RequestHandler = () => {
 	return {
@@ -7,7 +20,7 @@ export const get: RequestHandler = () => {
 		headers: {
 			'Content-Type': 'application/json'
 		},
-		body: { item }
+		body: {}
 	};
 };
 
@@ -16,10 +29,10 @@ export async function post({ request }) {
 	const username = form.get('user-id');
 	const password = form.get('user-password');
 	item = {
-		username,
-		password
+		username: username,
+		password: password
 	};
-
+	writeData(item);
 	return {
 		status: 303,
 		headers: {

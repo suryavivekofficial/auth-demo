@@ -1,5 +1,4 @@
-<script lang="ts">
-	export let item
+<script lang="ts">	
 	const data = ['category 1', 'category 2', 'category 3']
 
 	let password,eye,eyeSlash
@@ -32,7 +31,6 @@
 
 <div class="w-screen flex justify-center">
 	<main class="w-1/2">
-		{`${item.username} and ${item.password}`}
 		<div class="mt-16 mb-8">
 			<h2 class="text-center font-bold text-4xl tracking-wide">Login to Your Account</h2>
 			<p class="text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis molestias praesentium sapiente obcaecati rem cum? Veritatis iure corporis pariatur animi?</p>
