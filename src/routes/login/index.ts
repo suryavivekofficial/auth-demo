@@ -31,11 +31,15 @@ export async function post({ request }) {
 		username: username,
 		password: password
 	};
-	writeData(item);
-	return {
-		status: 303,
-		headers: {
-			location: '/'
-		}
-	};
+	try{
+		writeData(item);
+		return {
+			status: 303,
+			headers: {
+				location: '/'
+			}
+		};
+	} catch(e) {
+		console.error(e)
+	}
 }

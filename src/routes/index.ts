@@ -1,7 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import prisma from "../../lib/prisma"
 
-export async function get() {
+export async function get: RequestHandler () {
 	const users = await prisma.user.findMany();
 
 	if (users) {
