@@ -7,7 +7,6 @@ export const get: RequestHandler = async () => {
 	const users = await prisma.user.findMany();
 
 	if (users) {
-		console.log(users);
 		return {
 			status: 200,
 			headers: {
