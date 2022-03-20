@@ -1,12 +1,11 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { PrismaClient } from '@prisma/client'
-const prisma = new PrismaClient()
+import prisma from "../../lib/prisma"
 
 export async function get() {
-	const users = await prisma.User.findMany();
+	const users = await prisma.user.findMany();
 
 	if (users) {
-		console.log(users)
+		console.log(users);
 		return {
 			status: 200,
 			headers: {

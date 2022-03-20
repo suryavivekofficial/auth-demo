@@ -1,7 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 
-import { PrismaClient } from '@prisma/client';
-const prisma = new PrismaClient();
+import prisma from "../../../lib/prisma"
 
 let item: { username: string; password: string };
 
