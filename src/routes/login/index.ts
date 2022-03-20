@@ -1,17 +1,7 @@
 import type { RequestHandler } from '@sveltejs/kit';
+import PrismaClient from '$lib/prisma';
 
-import prisma from "../../../lib/prisma"
-
-let item: { username: string; password: string };
-
-async function writeData(item: { username: string; password: string }) {
-	const newUser = await prisma.user.create({
-		data: {
-			name: item.username,
-			password: item.password
-		}
-	});
-}
+const prisma = new PrismaClient();
 
 export const get: RequestHandler = () => {
 	return {
@@ -27,19 +17,21 @@ export async function post({ request }) {
 	const form = await request.formData();
 	const username = form.get('user-id');
 	const password = form.get('user-password');
-	item = {
-		username: username,
-		password: password
-	};
-	try{
-		writeData(item);
+
+	try {
+		const newUser = await prisma.user.create({
+			data: {
+				name: username,
+				password: password
+			}
+		});
 		return {
 			status: 303,
 			headers: {
 				location: '/'
 			}
 		};
-	} catch(e) {
-		console.error(e)
+	} catch (e) {
+		console.error(e);
 	}
 }
