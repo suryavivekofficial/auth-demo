@@ -17,12 +17,14 @@ export async function post({ request }) {
 	const form = await request.formData();
 	const username = form.get('user-id');
 	const password = form.get('user-password');
+	const role = form.get('user-role');
 
 	try {
 		const newUser = await prisma.user.create({
 			data: {
 				name: username,
-				password: password
+				password: password,
+				role: role
 			}
 		});
 		return {

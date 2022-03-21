@@ -1,6 +1,5 @@
 <script lang="ts">	
 	const data = ['category 1', 'category 2', 'category 3']
-
 	let password,eye,eyeSlash
 	const toggleVisibility = () => {
 		if(password.type === 'password') {
@@ -37,6 +36,12 @@
 		</div>
 
 		<form action="/login" method="POST" class="flex justify-center items-center flex-col gap-y-10 p-10">
+			<div>
+				<input type="radio" id="student" name="user-role" value="student" checked>
+				<label for="student">Student</label>
+				<input type="radio" id="teacher" name="user-role" value="teacher">
+				<label for="teacher">Teacher</label>
+			</div>
 			<input type="text" name="user-id" placeholder="Teacher/Student ID" class="py-2 px-4 w-1/2 rounded outline-none border border-black">
 			<div class="w-1/2 flex">
 				<input type="password" name="user-password" placeholder="Password" bind:this={password} class="py-2 pl-4 pr-10 w-full rounded outline-none border border-black">
