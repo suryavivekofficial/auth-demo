@@ -21,7 +21,6 @@
 		const btn = event.target
 		const input = btn.childNodes[0]
 		role = input.value
-		// console.log(input.value);
 		if (!input.checked) {
 			checked = !checked;
 		} 
