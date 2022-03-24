@@ -1,3 +1,17 @@
+<script context="module">
+  export async function load({ fetch }) {
+    const url = `api/home.json`;
+    const response = await fetch(url);
+    const data = await response.json()
+
+    return {
+      props: {
+        users: data.users
+      }
+    };
+  }
+</script>
+
 <script lang="ts">
 	export let users
 </script>

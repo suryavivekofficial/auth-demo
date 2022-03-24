@@ -48,7 +48,7 @@
 			<p class="text-center">Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis molestias praesentium sapiente obcaecati rem cum? Veritatis iure corporis pariatur animi?</p>
 		</div>
 
-		<form action="/login" method="POST" class="flex justify-center items-center flex-col gap-y-10 p-10">
+		<form action="/api/login.json" method="POST" class="flex justify-center items-center flex-col gap-y-10 p-10">
 			<div class="flex h-12 w-1/2">
 				<button on:click|preventDefault={selectRole} class:border = "{role === 'student'}" class:border-b-black = "{role === 'student'}" class="cursor-pointer h-full w-full flex justify-center items-center hover:bg-gray-200 focus:outline-none focus:border focus:border-b-black hover:border-b-black hover:border">
 					<input type="radio" id="student" name="user-role" value="student" class="pointer-events-none hidden" required checked={checked}>

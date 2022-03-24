@@ -3,17 +3,7 @@ import PrismaClient from '$lib/prisma';
 
 const prisma = new PrismaClient();
 
-export const get: RequestHandler = () => {
-	return {
-		status: 200,
-		headers: {
-			'Content-Type': 'application/json'
-		},
-		body: {}
-	};
-};
-
-export async function post({ request }) {
+export const post: RequestHandler = async ({ request }) => {
 	const form = await request.formData();
 	const username = form.get('user-id');
 	const password = form.get('user-password');
@@ -36,4 +26,4 @@ export async function post({ request }) {
 	} catch (e) {
 		console.error(e);
 	}
-}
+};
