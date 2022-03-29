@@ -1,7 +1,6 @@
 <script context="module">
   export async function load({ fetch }) {
-    const url = `api/home.json`;
-    const response = await fetch(url);
+    const response = await fetch(`api/home.json`);
     const data = await response.json()
 
     return {
@@ -22,7 +21,7 @@
 </h1>
 </a>
 
-<a href="/teachers/dashboard">
+<a href="/teachers">
 <h1 class="text-center my-8 hover:underline hover:text-blue-500">
   Click here to go to teachers' dashboard
 </h1>

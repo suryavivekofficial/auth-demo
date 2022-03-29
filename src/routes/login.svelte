@@ -13,7 +13,7 @@
 		}
 	}
 
-	let checked = true;
+	let checked = true;	
 	let role = 'student'
 	let placeholder
 	$: placeholder = role.charAt(0).toUpperCase() + role.slice(1);
