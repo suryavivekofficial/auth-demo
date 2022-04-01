@@ -4,7 +4,7 @@
 	import { questions } from '../../stores/testStore.ts';
 	
 	async function doPost () {
-		const res = await fetch('/api/submitTest.json', {
+		const res = await fetch('/api/tests.json', {
 			method: 'POST',
 			 headers: {
       			'Content-Type': 'application/json'
@@ -26,6 +26,10 @@
 		</div>
 	{/each}
 	{#if $questions.length}
+		<!-- <button 
+			class="py-4 px-10 mx-auto my-4 cursor-pointer bg-black text-white rounded hover:text-black hover:bg-white hover:px-14 duration-300 border-black border">
+			Create a level
+		</button> -->
 		<button
 			on:click={doPost} 
 			class="py-4 px-10 mx-auto my-4 cursor-pointer bg-black text-white rounded hover:text-black hover:bg-white hover:px-14 duration-300 border-black border">
