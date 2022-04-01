@@ -22,8 +22,12 @@ export const post: RequestHandler = async ({ request }) => {
 			headers: {
 				location: '/'
 			}
+			body: {
+				message: 'data recieved',
+				newUser
+			}
 		};
-	} catch (e) {
-		console.error(e);
+	} catch (err) {
+		console.error(err);
 	}
 };

@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"prebuild": "npx prisma migrate dev",
+		"prebuild": "npx prisma db push",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
@@ -35,7 +35,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^3.11.0",
+		"@prisma/client": "^3.11.1",
 		"prisma": "^3.11.0"
 	}
 }

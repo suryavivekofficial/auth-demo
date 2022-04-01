@@ -12,8 +12,25 @@ generator client {
 }
 
 model user {
-  id       String  @id @default(cuid())
+  id       String @id @default(cuid())
   name     String
   password String
   role     String
+}
+
+model questions {
+  id         String     @id @default(cuid())
+  text       String
+  option1    String
+  option2    String
+  option3    String
+  option4    String
+  correctAns correctAns
+}
+
+enum correctAns {
+  option1
+  option2
+  option3
+  option4
 }

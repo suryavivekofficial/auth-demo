@@ -1,26 +1,27 @@
-import type { RequestEvent } from '@sveltejs/kit/types/internal';
 import type { RequestHandler } from '@sveltejs/kit';
 import PrismaClient from '$lib/prisma';
 
 const prisma = new PrismaClient();
 
-export const get: RequestHandler = async () => {
-	return {
-		status: 200,
-		body: {
-			message: 'helo'
+export const post: RequestHandler = async (event) => {
+	let count
+	const body = await event.request.json();
+	body.forEach(obj => delete obj['id'])
+		try {
+			const newQues = await prisma.questions.createMany({
+				data: body
+			})
+			count = newQues.count
+		} catch (err) {
+			console.error(err)
 		}
-	};
-};
 
-export const post = async (event) => {
-	const data = await event.request.json();
-	console.log(data);
 	return {
 		status: 200,
 		body: {
 			message: 'data recieved',
-			data
+			body,
+			count
 		}
 	};
 };

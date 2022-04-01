@@ -13,7 +13,7 @@
 		})
 		
 		const data = await res.json()
-		console.log(data)
+		alert(`submitted ${data.count} question(s) to database`)
 	}
 </script>
 
