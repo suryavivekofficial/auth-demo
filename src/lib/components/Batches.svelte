@@ -12,7 +12,7 @@
 		} else if (menu.name == 'year'){
 			year.set(selected)
 		} else {
-			console.log('Invalid')
+			console.error('Invalid')
 		}
 	}
 </script>

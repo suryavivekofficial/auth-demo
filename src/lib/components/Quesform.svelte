@@ -5,6 +5,7 @@
 	let questionText, option1, option2, option3, option4, correctAns
 	const handleSubmit = () => {
 		const question = {
+			id: Date.now(),
 			text: questionText,
 			option1,
 			option2,
@@ -13,6 +14,13 @@
 			correctAns
 		}
 		addQues(question)
+
+		questionText = ''
+		option1 = ''
+		option2 = ''
+		option3 = ''
+		option4 = ''
+		correctAns = ''
 	}
 </script>
 
