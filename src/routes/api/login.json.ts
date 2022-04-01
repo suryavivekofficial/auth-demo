@@ -21,7 +21,7 @@ export const post: RequestHandler = async ({ request }) => {
 			status: 303,
 			headers: {
 				location: '/'
-			}
+			},
 			body: {
 				message: 'data recieved',
 				newUser
