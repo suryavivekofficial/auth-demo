@@ -40,7 +40,6 @@ export const post: RequestHandler = async (event) => {
 			body: {
 				userFound: true,
 				authToken: token,
-				secret,
 				message: 'user found',
 				user
 			}
