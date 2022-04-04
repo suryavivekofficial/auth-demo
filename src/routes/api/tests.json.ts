@@ -1,6 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import PrismaClient from '$lib/prisma';
-
 const prisma = new PrismaClient();
 
 export const get: RequestHandler = async () => {
