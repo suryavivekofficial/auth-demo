@@ -1,6 +1,7 @@
 <script lang="ts">	
 	import { goto } from '$app/navigation'
-	import { token } from '../stores/authStore.ts'
+	import { session } from '$app/stores'
+	// import { token } from '../stores/authStore.ts'
 	import Loading from '$lib/components/Loading.svelte'
 	
 	const data = ['category 1', 'category 2', 'category 3']
@@ -43,16 +44,11 @@
     		method: 'POST',
     		body: JSON.stringify(data)
     	})
-    	const response = await res.json()
-    	// if(!response.userFound){
-    	// 	alert('User Not found')
-    	// } else {
-    	// 	alert(response.message)
-    	// }
-		console.log(response)
-		localStorage.setItem('auth-token', response.authToken)
-		token.set(response.authToken)
+    	const body = await res.json()
+		// localStorage.setItem('auth-token', response.authToken)
+		// token.set(response.authToken)
 		loading = false
+		$session = body.user.id
 		await goto('/profile')
   }
 </script>

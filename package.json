@@ -36,6 +36,7 @@
 	"type": "module",
 	"dependencies": {
 		"@prisma/client": "^3.11.1",
+		"cookie": "^0.4.2",
 		"dotenv": "^16.0.0",
 		"jsonwebtoken": "^8.5.1",
 		"prisma": "^3.11.0"

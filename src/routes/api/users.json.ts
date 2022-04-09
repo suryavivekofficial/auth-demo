@@ -3,16 +3,27 @@ import PrismaClient from '$lib/prisma';
 
 const prisma = new PrismaClient();
 
-export const get: RequestHandler = async () => {
-	const users = await prisma.user.findMany();
+export const get: RequestHandler = async (request) => {
+	const id = request.url.searchParams.get('userId')
+	let user = null
+	if(id) {
+		user = await prisma.user.findUnique({
+			where: {
+				id
+			}
+		})
+	} else {
+		user = await prisma.user.findMany();
+	}
 
-	if (users) {
+
+	if (user) {
 		return {
 			status: 200,
 			headers: {
 				location: '/'
 			},
-			body: { users }
+			body: [ user ]
 		};
 	}
 	return {

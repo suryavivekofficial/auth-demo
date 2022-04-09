@@ -1,37 +1,41 @@
-<script>
-	import { goto } from '$app/navigation'
-	import { token } from '../stores/authStore.ts'
-	import { onMount } from 'svelte'
-	import { browser } from '$app/env';
-	import Loading from '$lib/components/Loading.svelte'
-
-
-	let name = ''
-	let loading = false
-
-	const auth = async (authToken) => {
-		loading = true
-		if(authToken === 'null') {
-			loading = false
-			await goto('/login')
-		} else {
-			const res = await fetch('/api/profile.json', {
-	    		method: 'POST',
-	    		body: JSON.stringify(authToken)
-	    	})
-	    	const response = await res.json()
-	    	name = response.user.password
+<script context="module">
+	export async function load({ fetch, session }) {
+		if(!session) {
+			return {
+    			status: 303,
+    			redirect: '/login'
+    		}
 		}
-		loading = false
-	}
-	if(browser){
-		auth($token)
-	}
+
+		const query = new URLSearchParams()
+		query.set('userId', session.userId)
+
+    	const response = await fetch(`api/users.json?${query}`);
+    	const data = await response.json()
+    	console.log(data)
+    	
+	    return {
+	      props: {
+	        user: data[0]
+	      }
+	    };    	
+  	}
 </script>
 
+<script>
+	import { session } from '$app/stores'
 
-{#if loading}
-	<Loading />
-{/if}
+	export let user
 
-<h1>hello {name}</h1>
+
+	$session.user
+
+
+</script>
+
+<h1>your id: {user.id}</h1>
+<h1>your roll no: {user.name}</h1>
+<h1>your password: {user.password}</h1>
+<h1>your role: {user.role}</h1>
+
+<!-- <h1>{userId}</h1> -->

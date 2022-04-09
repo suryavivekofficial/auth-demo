@@ -2,10 +2,9 @@
   export async function load({ fetch }) {
     const response = await fetch(`api/users.json`);
     const data = await response.json()
-
     return {
       props: {
-        users: data.users
+        users: data[0]
       }
     };
   }
