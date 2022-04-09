@@ -1,6 +1,6 @@
 <script context="module">
 	export async function load({ fetch, session }) {
-		if(!session) {
+		if(!session.userId) {
 			return {
     			status: 303,
     			redirect: '/login'
@@ -12,7 +12,6 @@
 
     	const response = await fetch(`api/users.json?${query}`);
     	const data = await response.json()
-    	console.log(data)
     	
 	    return {
 	      props: {
@@ -23,19 +22,12 @@
 </script>
 
 <script>
-	import { session } from '$app/stores'
-
 	export let user
-
-
-	$session.user
-
-
 </script>
+
+ profile page
 
 <h1>your id: {user.id}</h1>
 <h1>your roll no: {user.name}</h1>
 <h1>your password: {user.password}</h1>
 <h1>your role: {user.role}</h1>
-
-<!-- <h1>{userId}</h1> -->

@@ -48,7 +48,7 @@
 		// localStorage.setItem('auth-token', response.authToken)
 		// token.set(response.authToken)
 		loading = false
-		$session = body.user.id
+		$session.userId = body.user.id
 		await goto('/profile')
   }
 </script>
