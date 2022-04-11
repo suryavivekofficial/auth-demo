@@ -1,7 +1,6 @@
 <script lang="ts">	
 	import { goto } from '$app/navigation'
 	import { session } from '$app/stores'
-	// import { token } from '../stores/authStore.ts'
 	import Loading from '$lib/components/Loading.svelte'
 	
 	const data = ['category 1', 'category 2', 'category 3']
@@ -40,13 +39,11 @@
       		const [key, value] = field;
       		data[key] = value;
     	}
-    	const res = await fetch('/api/login.json', {
+    	const res = await fetch('/api/login', {
     		method: 'POST',
     		body: JSON.stringify(data)
     	})
     	const body = await res.json()
-		// localStorage.setItem('auth-token', response.authToken)
-		// token.set(response.authToken)
 		loading = false
 		$session.userId = body.user.id
 		await goto('/profile')

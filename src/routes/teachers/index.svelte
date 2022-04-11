@@ -4,7 +4,7 @@
 	import { questions } from '../../stores/testStore.ts';
 	
 	async function doPost () {
-		const res = await fetch('/api/tests.json', {
+		const res = await fetch('/api/tests', {
 			method: 'POST',
 			 headers: {
       			'Content-Type': 'application/json'

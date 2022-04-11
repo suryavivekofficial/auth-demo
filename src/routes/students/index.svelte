@@ -1,6 +1,6 @@
 <script context="module">
   export async function load({ fetch }) {
-    const response = await fetch(`api/tests.json`);
+    const response = await fetch(`api/tests`);
     const data = await response.json()
 
     return {

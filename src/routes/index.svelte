@@ -1,10 +1,10 @@
 <script context="module">
   export async function load({ fetch }) {
-    const response = await fetch(`api/users.json`);
+    const response = await fetch(`api/users`);
     const data = await response.json()
     return {
       props: {
-        users: data[0]
+        users: data.users
       }
     };
   }
