@@ -17,18 +17,18 @@ export const post: RequestHandler = async (event) => {
 		});
 		if (user === null) {
 			return {
-				status: 200,
+				status: 404,
 				body: {
-					userFound: false,
-					message: 'user not found'
+					ok: false,
+					message: 'User not found'
 				}
 			};
 		}
 		if (user.password !== body.password) {
 			return {
-				status: 200,
+				status: 404,
 				body: {
-					userFound: true,
+					ok: false,
 					message: 'Incorrect password'
 				}
 			};
@@ -48,7 +48,7 @@ export const post: RequestHandler = async (event) => {
 				})
 			},
 			body: {
-				userFound: true,
+				ok: true,
 				authToken: token,
 				message: 'user found',
 				user
