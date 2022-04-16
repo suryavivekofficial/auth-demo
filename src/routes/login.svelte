@@ -49,9 +49,8 @@
 			body: JSON.stringify(data)
 		});
 		const body = await res.json();
-		loading = false;
 		if(body.ok) {
-			$session.userId = body.user.id;
+			$session.userId = body.id;
 			await goto('/profile');
 		} else {
 			if(body.message === 'User not found') {
@@ -60,6 +59,7 @@
 				incorrectPassword = false
 			}
 		}
+		loading = false;
 	};
 </script>
 

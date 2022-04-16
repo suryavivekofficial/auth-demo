@@ -22,26 +22,30 @@ export const get: RequestHandler = async (request) => {
 
 export const post: RequestHandler = async ({ request }) => {
 	const form = await request.formData();
-	const username = form.get('user-id');
-	const password = form.get('user-password');
-	const role = form.get('user-role');
+	const rollNo = form.get('rollNo');
+	const name = form.get('name');
+	const userPassword = form.get('password');
+	const role = form.get('role');
 
 	try {
 		const newUser = await prisma.user.create({
 			data: {
-				name: username,
-				password: password,
-				role: role
+				rollNo,
+				name,
+				role,
+				password: {
+					create: {
+						hashedPassword: userPassword
+					}
+				}
 			}
 		});
+		
 		return {
-			status: 303,
-			headers: {
-				location: '/'
-			},
+			status: 200,
 			body: {
 				message: 'data recieved',
-				newUser
+				userInserted: true
 			}
 		};
 	} catch (err) {

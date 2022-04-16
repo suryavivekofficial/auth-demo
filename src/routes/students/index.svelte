@@ -23,3 +23,6 @@
 	<div>{question.option4}</div>
 	<div>{question.correctAns}</div>
 {/each}
+
+
+This is student home page

@@ -27,7 +27,7 @@
 </script>
 
 <div class="w-screen h-screen flex justify-center items-center">	
-<form action="/api/users.json" method="POST" class="flex w-1/2 items-center flex-col gap-y-10">
+<form action="/api/users" method="POST" class="flex w-1/2 items-center flex-col gap-y-10">
 	<div class="flex h-12 w-1/2">
 	<button 
 		on:click|preventDefault={selectRole} 
@@ -39,7 +39,7 @@
 		<input 
 			type="radio" 
 			id="student" 
-			name="user-role" 
+			name="role" 
 			value="student" 
 			class="pointer-events-none hidden" 
 			required 
@@ -56,7 +56,7 @@
 		<input 
 			type="radio" 
 			id="teacher" 
-			name="user-role" 
+			name="role" 
 			value="teacher" 
 			class="pointer-events-none hidden" 
 			required 
@@ -66,17 +66,28 @@
 	</button>
 	
 	</div>
+		
+
 		<input 
 			type="text" 
-			name="user-id" 
+			name="rollNo" 
 			placeholder={`${placeholder} ID`} 
 			required 
 			class="py-2 px-4 w-1/2 rounded outline-none border border-black"
 		>
+
+		<input 
+			type="text" 
+			name="name" 
+			placeholder={`${placeholder} name`} 
+			required 
+			class="py-2 px-4 w-1/2 rounded outline-none border border-black"
+		>
+
 		<div class="w-1/2 flex">
 			<input 
 				type="password" 
-				name="user-password" 
+				name="password" 
 				placeholder="Password" 
 				required bind:this={password} 
 				class="py-2 pl-4 pr-10 w-full rounded outline-none border border-black"

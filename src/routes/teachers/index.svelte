@@ -17,6 +17,8 @@
 	}
 </script>
 
+This is teacher home page
+
 <div class="flex items-center flex-col">
 	<h1 class="text-2xl underline m-8">Teacher's Dashboard</h1>
 	<Quesform />
@@ -38,3 +40,5 @@
 		</button>
 	{/if}
 </div>
+
+
