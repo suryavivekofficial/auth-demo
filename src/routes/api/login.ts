@@ -3,6 +3,7 @@ import PrismaClient from '$lib/prisma';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
+import bcrypt from 'bcryptjs'
 
 const { sign } = jwt;
 const prisma = new PrismaClient();
@@ -32,7 +33,9 @@ export const post: RequestHandler = async (event) => {
 			}
 		})
 
-		if (hashedPassword !== body.password) {
+		const validPass = await bcrypt.compare(body.password, hashedPassword)
+
+		if (!validPass) {
 			return {
 				status: 404,
 				body: {

@@ -1,5 +1,6 @@
 import type { RequestHandler } from '@sveltejs/kit';
 import PrismaClient from '$lib/prisma';
+import bcrypt from 'bcryptjs'
 
 const prisma = new PrismaClient();
 
@@ -21,11 +22,16 @@ export const get: RequestHandler = async (request) => {
 };
 
 export const post: RequestHandler = async ({ request }) => {
+	//Getting Form data
 	const form = await request.formData();
 	const rollNo = form.get('rollNo');
 	const name = form.get('name');
 	const userPassword = form.get('password');
 	const role = form.get('role');
+
+	// Hashing password
+	const salt = await bcrypt.genSalt(10)
+	const hashedPassword = await bcrypt.hash(userPassword, salt)
 
 	try {
 		const newUser = await prisma.user.create({
@@ -35,7 +41,7 @@ export const post: RequestHandler = async ({ request }) => {
 				role,
 				password: {
 					create: {
-						hashedPassword: userPassword
+						hashedPassword
 					}
 				}
 			}
