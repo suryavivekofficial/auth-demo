@@ -3,6 +3,7 @@
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
+		"prebuild":"npx prisma generate",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
