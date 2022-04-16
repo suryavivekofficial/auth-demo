@@ -39,7 +39,6 @@
 <h1>your password: {user.password}</h1>
 <h1>your role: {user.role}</h1>
 
-
 <button 
 	on:click={logout}
 	class="py-3 px-10 m-4 bg-black text-white rounded hover:text-black hover:bg-white duration-300 border-black border">
