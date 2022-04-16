@@ -10,19 +10,13 @@ const prisma = new PrismaClient();
 export const post: RequestHandler = async (event) => {
 	const body = await event.request.json();
 	try {
-		const { id } = await prisma.user.findUnique({
+		const user = await prisma.user.findUnique({
 			where: {
 				rollNo: body.id
 			}
 		});
-		const { hashedPassword } = await prisma.passwords.findUnique({
-			where: {
-				user_id: id
-			}
-		})
-		console.log(id)
-		console.log(hashedPassword)
-		if (!id) {
+
+		if (!user) {
 			return {
 				status: 404,
 				body: {
@@ -31,6 +25,13 @@ export const post: RequestHandler = async (event) => {
 				}
 			};
 		}
+
+		const { hashedPassword } = await prisma.passwords.findUnique({
+			where: {
+				user_id: user.id
+			}
+		})
+
 		if (hashedPassword !== body.password) {
 			return {
 				status: 404,
@@ -40,8 +41,9 @@ export const post: RequestHandler = async (event) => {
 				}
 			};
 		}
+		
 		const secret = process.env.TOKEN_SECRET;
-		const token = jwt.sign({ id }, secret);
+		const token = jwt.sign({ id: user.id }, secret);
 
 		return {
 			status: 302,
@@ -56,9 +58,8 @@ export const post: RequestHandler = async (event) => {
 			},
 			body: {
 				ok: true,
-				authToken: token,
 				message: 'user found',
-				id
+				user
 			}
 		};
 	} catch (err) {

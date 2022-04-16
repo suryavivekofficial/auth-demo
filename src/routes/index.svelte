@@ -1,24 +1,24 @@
 <script context="module">
 	export async function load({ fetch, session }) {
-		if(!session.userId) {
+		if(!session.user) {
 			return {
     			status: 303,
     			redirect: '/login'
     		}
 		}
 
-    	const response = await fetch(`api/users/${session.userId}`);
+    	const response = await fetch(`api/users/${session.user.id}`);
     	const data = await response.json()
     	const user = data.user
     	if(user.role === 'teacher'){
     		return {
     			status: 303,
-    			redirect: '/teachers'
+    			redirect: '/teacher'
     		}
     	} else {
     		return {
     			status: 303,
-    			redirect: '/students'
+    			redirect: '/student'
     		}
     	}  	
   	}

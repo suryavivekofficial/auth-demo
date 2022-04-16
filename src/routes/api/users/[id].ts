@@ -18,6 +18,9 @@ export const get: RequestHandler = async (request) => {
 		};
 	}
 	return {
-		status: 404
+		status: 404,
+		body: {
+			message: "User not found"
+		}
 	};
 };

@@ -1,17 +1,23 @@
 import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
+import PrismaClient from '$lib/prisma';
 
-
+const prisma = new PrismaClient();
 const { verify } = jwt;
 
-export const handle = ({ event, resolve }) => {
+export const handle = async ({ event, resolve }) => {
 	const cookies = parse(event.request.headers.get('cookie') || '');
 
 	if (cookies.authToken) {
 		const verified = jwt.verify(cookies.authToken, process.env.TOKEN_SECRET);
 		if (verified) {
-			event.locals.userId = verified.id;
+			const user = await prisma.user.findUnique({
+			where: {
+				id: verified.id
+			}
+			});
+			event.locals.user = user;
 			return resolve(event);
 		}
 	}
@@ -21,9 +27,9 @@ export const handle = ({ event, resolve }) => {
 };
 
 export const getSession = (event) => {
-	return event?.locals?.userId
+	return event?.locals?.user
 		? {
-				userId: event.locals.userId
+				user: event.locals.user
 		  }
 		: {};
 };

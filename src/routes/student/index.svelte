@@ -1,42 +1,50 @@
 <script context="module">
-	export async function load({ fetch, session }) {
-		if(!session.userId) {
+	export async function load({ session }) {
+		if(!session.user) {
 			return {
     			status: 303,
     			redirect: '/login'
     		}
 		}
 
-    	const response = await fetch(`api/users/${session.userId}`);
-    	const data = await response.json()
-	    return {
-	      props: {
-	        user: data.user
-	      }
-	    };    	
+		return {
+			status: 200
+		}
   	}
 </script>
 
 <script>
 	import { session } from '$app/stores'
+	import { goto } from '$app/navigation'
+	import Loading from '$lib/components/Loading.svelte';	
 	
+	let loading = false
+
 	const logout = async () => {
+		loading = true
 		const res = await fetch(`/api/logout`, {
 			method: 'POST'
 		})
-		$session.userId = ''
+		$session.user = ''
+		await goto('/login')
+		loading = false
 	}
 
-	export let user
+	const user = $session.user
 </script>
+
+
+{#if loading}
+	<Loading />
+{/if}
 
  profile page
 
 <div class="m-8">
 
 <h1>your id: {user.id}</h1>
-<h1>your roll no: {user.name}</h1>
-<h1>your password: {user.password}</h1>
+<h1>your roll no: {user.rollNo}</h1>
+<h1>your name: {user.name}</h1>
 <h1>your role: {user.role}</h1>
 
 <button 
@@ -45,3 +53,4 @@
 	Log Out
 </button>
 </div>
+

@@ -50,8 +50,8 @@
 		});
 		const body = await res.json();
 		if(body.ok) {
-			$session.userId = body.id;
-			await goto('/profile');
+			$session.user = body.user;
+			await goto(`/${body.user.role}`);
 		} else {
 			if(body.message === 'User not found') {
 				userFound = false
