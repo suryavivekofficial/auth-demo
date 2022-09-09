@@ -3,9 +3,9 @@ import PrismaClient from '$lib/prisma';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
-import bcrypt from 'bcryptjs'
+import bcrypt from 'bcryptjs';
 
-const { sign } = jwt;
+// const { sign } = jwt;
 const prisma = new PrismaClient();
 
 export const post: RequestHandler = async (event) => {
@@ -31,9 +31,9 @@ export const post: RequestHandler = async (event) => {
 			where: {
 				user_id: user.id
 			}
-		})
+		});
 
-		const validPass = await bcrypt.compare(body.password, hashedPassword)
+		const validPass = await bcrypt.compare(body.password, hashedPassword);
 
 		if (!validPass) {
 			return {
@@ -44,7 +44,7 @@ export const post: RequestHandler = async (event) => {
 				}
 			};
 		}
-		
+
 		const secret = process.env.TOKEN_SECRET;
 		const token = jwt.sign({ id: user.id }, secret);
 
