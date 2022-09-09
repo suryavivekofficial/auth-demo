@@ -4,7 +4,7 @@ import 'dotenv/config';
 import PrismaClient from '$lib/prisma';
 
 const prisma = new PrismaClient();
-const { verify } = jwt;
+// const { verify } = jwt;
 
 export const handle = async ({ event, resolve }) => {
 	const cookies = parse(event.request.headers.get('cookie') || '');
@@ -13,9 +13,9 @@ export const handle = async ({ event, resolve }) => {
 		const verified = jwt.verify(cookies.authToken, process.env.TOKEN_SECRET);
 		if (verified) {
 			const user = await prisma.user.findUnique({
-			where: {
-				id: verified.id
-			}
+				where: {
+					id: verified.id
+				}
 			});
 			event.locals.user = user;
 			return resolve(event);
