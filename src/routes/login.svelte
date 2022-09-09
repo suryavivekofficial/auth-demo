@@ -2,8 +2,9 @@
 	import { goto } from '$app/navigation';
 	import { session } from '$app/stores';
 	import Loading from '$lib/components/Loading.svelte';
+	import Overlay from '$lib/components/Overlay.svelte';
+	import { isOverlay } from '$lib/stores/overlayStore';
 
-	const data = ['category 1', 'category 2', 'category 3'];
 	let password,
 		eye,
 		eyeSlash,
@@ -49,17 +50,21 @@
 			body: JSON.stringify(data)
 		});
 		const body = await res.json();
-		if(body.ok) {
+		if (body.ok) {
 			$session.user = body.user;
 			await goto(`/${body.user.role}`);
 		} else {
-			if(body.message === 'User not found') {
-				userFound = false
-			} else if(body.message === 'Incorrect password') {
-				incorrectPassword = false
+			if (body.message === 'User not found') {
+				userFound = false;
+			} else if (body.message === 'Incorrect password') {
+				incorrectPassword = false;
 			}
 		}
 		loading = false;
+	};
+
+	const showOverlay = () => {
+		isOverlay.set(true);
 	};
 </script>
 
@@ -67,15 +72,13 @@
 	<Loading />
 {/if}
 
+{#if $isOverlay}
+	<Overlay />
+{/if}
+
 <nav class="py-2 flex items-center justify-around">
 	<h2 class="font-bold hover:underline"><a href="/">Pragati</a></h2>
-	<ul class="flex justify-evenly">
-		{#each data as piece}
-			<li class="mx-4 hover:underline">
-				<a href="/">{piece}</a>
-			</li>
-		{/each}
-	</ul>
+	<button on:click={showOverlay}>Show sample data</button>
 	<div>
 		<button
 			class="py-3 px-10 m-px bg-black text-white rounded hover:text-black hover:bg-white duration-300 border-black border"
@@ -88,10 +91,6 @@
 	<main class="w-1/2">
 		<div class="my-8">
 			<h2 class="text-center font-bold text-4xl tracking-wide">Login to Your Account</h2>
-			<p class="text-center">
-				Lorem ipsum dolor, sit amet consectetur adipisicing elit. Quis molestias praesentium
-				sapiente obcaecati rem cum? Veritatis iure corporis pariatur animi?
-			</p>
 		</div>
 
 		<form
