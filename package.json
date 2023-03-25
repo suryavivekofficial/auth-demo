@@ -1,5 +1,5 @@
 {
-	"name": "prag",
+	"name": "auth-demo",
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
@@ -26,6 +26,7 @@
 		"postcss": "^8.4.12",
 		"prettier": "^2.5.1",
 		"prettier-plugin-svelte": "^2.5.0",
+		"prisma": "^4.11.0",
 		"svelte": "^3.44.0",
 		"svelte-check": "^2.2.6",
 		"svelte-preprocess": "^4.10.1",
@@ -35,11 +36,10 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@prisma/client": "^3.11.1",
+		"@prisma/client": "^4.11.0",
 		"bcryptjs": "^2.4.3",
 		"cookie": "^0.4.2",
 		"dotenv": "^16.0.0",
-		"jsonwebtoken": "^8.5.1",
-		"prisma": "^3.11.0"
+		"jsonwebtoken": "^9.0.0"
 	}
 }

@@ -2,48 +2,24 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 datasource db {
-  provider = "mysql"
-  url      = env("DATABASE_URL")
-  referentialIntegrity = "prisma"
+  provider = "sqlite"
+  url      = "file:./db/dev.db"
 }
 
 generator client {
-  provider      = "prisma-client-js"
-  previewFeatures = ["referentialIntegrity"]
+  provider = "prisma-client-js"
 }
 
-model user {
-  id       String     @id @default(cuid())
-  rollNo   String     @unique
+model User {
+  id       String    @id @default(cuid())
+  username String    @unique
   name     String
-  password passwords?
-  role     role
+  password Password?
 }
 
-model passwords {
-  password       user    @relation(fields: [user_id], references: [id])
-  user_id        String  @unique
-  hashedPassword String
-}
-
-model questions {
-  id         String     @id @default(cuid())
-  text       String
-  option1    String
-  option2    String
-  option3    String
-  option4    String
-  correctAns correctAns
-}
-
-enum correctAns {
-  option1
-  option2
-  option3
-  option4
-}
-
-enum role {
-  teacher
-  student
+model Password {
+  id       String @id @default(cuid())
+  user     User   @relation(fields: [userId], references: [id])
+  userId   String @unique
+  password String
 }
