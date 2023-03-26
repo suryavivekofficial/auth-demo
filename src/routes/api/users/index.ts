@@ -53,7 +53,8 @@ export const post = async ({ request }) => {
 		return {
 			status: 500,
 			body: {
-				success: false
+				success: false,
+				error
 			}
 		};
 	}
