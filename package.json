@@ -3,7 +3,7 @@
 	"version": "1.0.0",
 	"scripts": {
 		"dev": "svelte-kit dev",
-		"prebuild": "mkdir prisma/db && touch prisma/db/dev.db && npx prisma migrate deploy && npx prisma generate",
+		"prebuild": "npx prisma db push",
 		"build": "svelte-kit build",
 		"package": "svelte-kit package",
 		"preview": "svelte-kit preview",
