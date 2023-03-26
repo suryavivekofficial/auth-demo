@@ -8,6 +8,8 @@
 	import Button from '$lib/components/Button.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import UserRole from '$lib/components/UserRole.svelte';
+
+	import { role } from '$lib/stores/roleStore';
 	import { isVisible } from '$lib/stores/visibilityStore';
 
 	// let password,
@@ -27,11 +29,11 @@
 	// 	}
 	// };
 
-	let checked = true;
-	let placeholder;
-	type RoleType = 'user' | 'admin';
-	let role: RoleType = 'user';
-	$: placeholder = role.charAt(0).toUpperCase() + role.slice(1);
+	// let checked = true;
+	// let placeholder;
+	// type RoleType = 'user' | 'admin';
+	// let role: RoleType = 'user';
+	// $: placeholder = role.charAt(0).toUpperCase() + role.slice(1);
 	// const selectRole = (event) => {
 	// 	const btn = event.target;
 	// 	const input = btn.childNodes[0];
@@ -144,7 +146,7 @@
 			<input
 				type="text"
 				name="username"
-				placeholder={`${placeholder} ID`}
+				placeholder={`${$role} ID`}
 				required
 				autocomplete="off"
 				class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
