@@ -1,8 +1,7 @@
-import type { RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/prisma';
 import bcrypt from 'bcryptjs';
 
-export const get: RequestHandler = async () => {
+export const get = async () => {
 	const users = await prisma.user.findMany();
 
 	if (users) {
@@ -19,40 +18,43 @@ export const get: RequestHandler = async () => {
 	};
 };
 
-export const post: RequestHandler = async ({ request }) => {
-	//Getting Form data
-	const form = await request.formData();
-	const rollNo = form.get('rollNo');
-	const name = form.get('name');
-	const userPassword = form.get('password');
-	const role = form.get('role');
+export const post = async ({ request }) => {
+	const body = await request.json();
+	// console.log(body);
 
-	// Hashing password
-	const salt = await bcrypt.genSalt(10);
-	const hashedPassword = await bcrypt.hash(userPassword, salt);
+	const hashedPassword = await bcrypt.hash(body.password, 10);
+	// console.log(hashedPassword);
+
+	// const validPass = await bcrypt.compare(body.password, hashedPassword);
+	// console.log(validPass);
 
 	try {
-		const newUser = await prisma.user.create({
+		const user = await prisma.user.create({
 			data: {
-				rollNo,
-				name,
-				role,
+				name: body.fullName,
+				role: body.role,
+				username: body.username,
 				password: {
 					create: {
-						hashedPassword
+						password: hashedPassword
 					}
 				}
 			}
 		});
-
 		return {
 			status: 200,
 			body: {
-				message: 'data recieved',
-				userInserted: true
+				success: true,
+				user
 			}
 		};
-	} catch (err) {
-		console.error(err);
+	} catch (error) {
+		console.error(error);
+		return {
+			status: 500,
+			body: {
+				success: false
+			}
+		};
 	}
 };

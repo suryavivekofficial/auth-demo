@@ -12,6 +12,6 @@
 	/>
 </svelte:head>
 
-<div class="h-screen w-screen overflow-hidden bg-slate-200 text-gray-700">
+<div class="h-screen w-screen overflow-x-hidden bg-slate-100 text-gray-600">
 	<slot />
 </div>

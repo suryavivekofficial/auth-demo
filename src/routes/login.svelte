@@ -82,20 +82,19 @@
 	<Overlay />
 {/if} -->
 
-<Nav />
+<Nav url="/signup" />
 
-<div class="w-screen flex justify-center">
-	<main class="w-full">
-		<div class="my-8">
-			<h2 class="text-center text-xl tracking-wide">Login to Your Account</h2>
-		</div>
+<div class="w-screen flex flex-col justify-center">
+	<div class="my-8">
+		<h2 class="text-center text-xl tracking-wide">Login to an existing account</h2>
+	</div>
 
-		<form
-			on:submit|preventDefault={() => console.log('handle submit')}
-			class="flex justify-center items-center flex-col gap-y-10 p-10"
-		>
-			<UserRole />
-			<!-- <div class="flex h-12 w-80 justify-between items-center">
+	<form
+		on:submit|preventDefault={() => console.log('handle submit')}
+		class="flex justify-center items-center flex-col gap-y-10 p-10"
+	>
+		<UserRole />
+		<!-- <div class="flex h-12 w-80 justify-between items-center">
 				<button
 					type="button"
 					on:click|preventDefault={() => console.log('select role')}
@@ -131,7 +130,7 @@
 				</button>
 			</div> -->
 
-			<!-- <div
+		<!-- <div
 				class="py-2 px-4 rounded outline-none border border-black flex justify-center items-center"
 			>
 				<input
@@ -143,32 +142,32 @@
 					class=""
 				/>
 			</div> -->
+		<input
+			type="text"
+			name="username"
+			placeholder={`${$role} ID`}
+			required
+			autocomplete="off"
+			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+		/>
+		<div class="relative">
 			<input
-				type="text"
-				name="username"
-				placeholder={`${$role} ID`}
-				required
+				type={$isVisible ? `text` : `password`}
+				name="password"
+				placeholder="Password"
 				autocomplete="off"
-				class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+				required
+				class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+				id="password"
 			/>
-			<div class="relative">
-				<input
-					type={$isVisible ? `text` : `password`}
-					name="password"
-					placeholder="Password"
-					autocomplete="off"
-					required
-					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
-					id="password"
-				/>
-				<Eye />
-			</div>
-			<Button>Login</Button>
+			<Eye />
+		</div>
+		<Button>Login</Button>
 
-			<!-- {#if !userFound}
+		<!-- {#if !userFound}
 				<p>User not found!!!</p>
 			{/if} -->
-			<!-- <div class="flex">
+		<!-- <div class="flex">
 				<input
 					type="password"
 					name="password"
@@ -179,7 +178,7 @@
 				/>
 				<Eye />
 			</div> -->
-			<!-- {#if !incorrectPassword}
+		<!-- {#if !incorrectPassword}
 				<p>Incorrect Password</p>
 			{/if}
 			<input
@@ -187,6 +186,5 @@
 				value="Login to your account"
 				class="py-2 px-8 min-w-1/2 rounded outline-none cursor-pointer bg-black text-white border border-black hover:bg-white hover:text-black hover:px-12 duration-300"
 			/> -->
-		</form>
-	</main>
+	</form>
 </div>

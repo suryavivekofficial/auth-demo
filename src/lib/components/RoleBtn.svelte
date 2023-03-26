@@ -4,7 +4,7 @@
 	import type { RoleType } from '$lib/stores/roleStore';
 	import { role } from '$lib/stores/roleStore';
 
-	let checked;
+	let checked: boolean;
 	$: checked = $role === selectedRole;
 </script>
 
@@ -12,8 +12,9 @@
 	type="button"
 	on:click|preventDefault={() => role.set(selectedRole)}
 	class={`${
-		checked ? 'ring-blue-500 text-blue-500 ring-2' : 'ring-slate-700/50 ring-1'
-	} cursor-pointer flex px-4 space-x-2 items-center outline-none h-full flex-1 duration-300 font-bold rounded`}
+		checked ? 'ring-blue-500 text-blue-500 ring-2 bg-blue-100' : 'ring-slate-700/50 ring-1'
+	} 
+			cursor-pointer flex px-4 space-x-2 items-center outline-none h-full flex-1 duration-300 font-bold rounded focus-visible:text-blue-300 focus-visible:ring-1 focus-visible:bg-blue-100`}
 >
 	<span
 		class={`w-4 h-4 rounded-full border flex justify-center items-center ${
