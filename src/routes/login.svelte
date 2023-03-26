@@ -5,11 +5,14 @@
 	// import Overlay from '$lib/components/Overlay.svelte';
 	// import { isOverlay } from '$lib/stores/overlayStore';
 	import Eye from '$lib/components/Eye.svelte';
+	import Button from '$lib/components/Button.svelte';
+	import Nav from '$lib/components/Nav.svelte';
+	import UserRole from '$lib/components/UserRole.svelte';
 	import { isVisible } from '$lib/stores/visibilityStore';
 
-	let password,
-		userFound = true,
-		incorrectPassword = true;
+	// let password,
+	// 	userFound = true,
+	// 	incorrectPassword = true;
 	// loading = false;
 
 	// const toggleVisibility = () => {
@@ -25,18 +28,18 @@
 	// };
 
 	let checked = true;
-	let role = 'user';
 	let placeholder;
+	type RoleType = 'user' | 'admin';
+	let role: RoleType = 'user';
 	$: placeholder = role.charAt(0).toUpperCase() + role.slice(1);
-	// type role = 'user' | 'admin'
-	const selectRole = (event) => {
-		const btn = event.target;
-		const input = btn.childNodes[0];
-		role = input.value;
-		if (!input.checked) {
-			checked = !checked;
-		}
-	};
+	// const selectRole = (event) => {
+	// 	const btn = event.target;
+	// 	const input = btn.childNodes[0];
+	// 	role = input.value;
+	// 	if (!input.checked) {
+	// 		checked = !checked;
+	// 	}
+	// };
 
 	// const handleSubmit = async (e) => {
 	// 	loading = true;
@@ -77,16 +80,7 @@
 	<Overlay />
 {/if} -->
 
-<nav class="py-4 px-12 flex items-center justify-between">
-	<h2 class="font-bold text-2xl tracking-widest"><a href="/">LOGO</a></h2>
-	<!-- <button on:click={showOverlay}>Show sample data</button> -->
-	<div>
-		<button
-			class="py-3 px-10 m-px bg-black text-white rounded hover:text-black hover:bg-white duration-300 border-black border"
-			>Sign Up</button
-		>
-	</div>
-</nav>
+<Nav />
 
 <div class="w-screen flex justify-center">
 	<main class="w-full">
@@ -98,12 +92,12 @@
 			on:submit|preventDefault={() => console.log('handle submit')}
 			class="flex justify-center items-center flex-col gap-y-10 p-10"
 		>
-			<div class="flex h-12 space-x-8">
+			<UserRole />
+			<!-- <div class="flex h-12 w-80 justify-between items-center">
 				<button
-					on:click|preventDefault={selectRole}
-					class:border={role === 'user'}
-					class:border-b-black={role === 'user'}
-					class="cursor-pointer flex justify-center items-center hover:bg-gray-200 focus:outline-none focus:border focus:border-b-black hover:border-b-black hover:border"
+					type="button"
+					on:click|preventDefault={() => console.log('select role')}
+					class="cursor-pointer flex justify-center items-center outline-none"
 				>
 					<input
 						type="radio"
@@ -118,10 +112,9 @@
 				</button>
 
 				<button
-					on:click|preventDefault={selectRole}
-					class:border={role === 'admin'}
-					class:border-b-black={role === 'admin'}
-					class="cursor-pointer flex justify-center items-center hover:bg-gray-200 focus:outline-none focus:border focus:border-b-black hover:border-b-black hover:border"
+					type="button"
+					on:click|preventDefault={() => console.log('select role')}
+					class="cursor-pointer flex justify-center items-center outline-none"
 				>
 					<input
 						type="radio"
@@ -134,7 +127,7 @@
 					/>
 					<label for="admin" class="cursor-pointer pointer-events-none">Admin</label>
 				</button>
-			</div>
+			</div> -->
 
 			<!-- <div
 				class="py-2 px-4 rounded outline-none border border-black flex justify-center items-center"
@@ -154,7 +147,7 @@
 				placeholder={`${placeholder} ID`}
 				required
 				autocomplete="off"
-				class="w-64 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+				class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
 			/>
 			<div class="relative">
 				<input
@@ -163,17 +156,12 @@
 					placeholder="Password"
 					autocomplete="off"
 					required
-					class="w-64 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
 					id="password"
 				/>
 				<Eye />
 			</div>
-			<button
-				type="submit"
-				class="bg-slate-700 hover:bg-slate-600 outline-none text-white font-semibold py-2 px-4 rounded duration-300 focus:ring-4 focus:ring-blue-500"
-			>
-				Login
-			</button>
+			<Button>Login</Button>
 
 			<!-- {#if !userFound}
 				<p>User not found!!!</p>
