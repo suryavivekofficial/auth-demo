@@ -1,12 +1,12 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import PrismaClient from '$lib/prisma';
+import { prisma } from '$lib/prisma';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 import bcrypt from 'bcryptjs';
 
 // const { sign } = jwt;
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 
 export const post: RequestHandler = async (event) => {
 	const body = await event.request.json();

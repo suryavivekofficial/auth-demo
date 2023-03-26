@@ -1,9 +1,9 @@
 import { parse } from 'cookie';
 import jwt from 'jsonwebtoken';
 import 'dotenv/config';
-import PrismaClient from '$lib/prisma';
+import { prisma } from '$lib/prisma';
 
-const prisma = new PrismaClient();
+// const prisma = new PrismaClient();
 // const { verify } = jwt;
 
 export const handle = async ({ event, resolve }) => {

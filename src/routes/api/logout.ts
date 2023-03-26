@@ -1,7 +1,6 @@
-import { serialize } from 'cookie'
+import { serialize } from 'cookie';
 
-export async function post(event) {
-
+export async function post() {
 	return {
 		status: 200,
 		headers: {
@@ -11,5 +10,5 @@ export async function post(event) {
 				maxAge: 0
 			})
 		}
-	}
+	};
 }
