@@ -8,6 +8,8 @@
 
 	let confirmPassword: string;
 	let warn: boolean;
+	let usernameError = false;
+	let passwordError = '';
 
 	type userInputsType = {
 		fullName: string;
@@ -31,6 +33,11 @@
 		console.log(await res.json());
 	};
 
+	const validateUsername = (username: string) => {
+		const regex = /^[a-zA-Z0-9_]+$/;
+		if (username.trim().length !== 0) usernameError = regex.test(username);
+	};
+
 	const checkPassword = () => {
 		if (userInputs.password !== confirmPassword) {
 			warn = true;
@@ -51,6 +58,7 @@
 		on:submit|preventDefault={(event) => handleSubmit(event)}
 		class="flex justify-center items-center flex-col gap-y-6 p-10"
 	>
+		<!-- Full Name input field -->
 		<input
 			type="text"
 			name="name"
@@ -58,20 +66,32 @@
 			placeholder="Full name"
 			required
 			autocomplete="off"
-			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 ring-blue-500 focus:border-transparent bg-white text-black"
 		/>
+
+		<!-- User role selection -->
 		<UserRole />
 
-		<input
-			type="text"
-			name="username"
-			bind:value={userInputs.username}
-			placeholder={`${$role} ID`}
-			required
-			autocomplete="off"
-			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
-		/>
+		<!-- Username Input -->
+		<div>
+			<input
+				bind:value={userInputs.username}
+				on:input={() => validateUsername(userInputs.username)}
+				type="text"
+				name="username"
+				placeholder={`${$role} ID`}
+				required
+				autocomplete="off"
+				class={`${
+					!usernameError ? 'ring-red-500' : 'ring-blue-500'
+				} w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2  focus:border-transparent bg-white text-black`}
+			/>
+			<p class:hidden={usernameError} class="text-xs p-1 text-red-500">
+				{`${$role} ID should not contain special characters`}
+			</p>
+		</div>
 
+		<!-- Password Input -->
 		<div class="relative">
 			{#if $isVisible}
 				<input
@@ -100,6 +120,7 @@
 			<Eye />
 		</div>
 
+		<!-- Check password input -->
 		<div class="relative">
 			{#if $isVisible}
 				<input
@@ -133,6 +154,7 @@
 
 			<Eye />
 		</div>
+
 		<Button>Sign Up</Button>
 	</form>
 </div>

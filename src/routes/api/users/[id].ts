@@ -1,4 +1,4 @@
-import { prisma } from '$lib/prisma';
+import { prisma } from '$lib/utils/prisma';
 
 export const get = async (request) => {
 	const id = request.params.id;

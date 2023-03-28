@@ -1,5 +1,5 @@
 import type { RequestHandler } from '@sveltejs/kit';
-import { prisma } from '$lib/prisma';
+import { prisma } from '$lib/utils/prisma';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
