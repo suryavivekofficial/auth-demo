@@ -7,9 +7,8 @@
 	import { isVisible } from '$lib/stores/visibilityStore';
 
 	let confirmPassword: string;
-	let warn: boolean;
-	let usernameError = false;
-	let passwordError = '';
+	let passwordError = false;
+	let usernameError = true;
 
 	type userInputsType = {
 		fullName: string;
@@ -39,11 +38,9 @@
 	};
 
 	const checkPassword = () => {
-		if (userInputs.password !== confirmPassword) {
-			warn = true;
-		} else {
-			warn = false;
-		}
+		if (userInputs.password !== confirmPassword && confirmPassword.trim().length !== 0) {
+			passwordError = true;
+		} else passwordError = false;
 	};
 </script>
 
@@ -132,7 +129,7 @@
 					autocomplete="off"
 					required
 					class={`${
-						warn ? 'focus:ring-red-500' : 'focus:ring-blue-500'
+						passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
 					} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
 					id="password"
 				/>
@@ -146,7 +143,7 @@
 					autocomplete="off"
 					required
 					class={`${
-						warn ? 'focus:ring-red-500' : 'focus:ring-blue-500'
+						passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
 					} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
 					id="password"
 				/>
