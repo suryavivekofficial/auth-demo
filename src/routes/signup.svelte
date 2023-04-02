@@ -76,80 +76,90 @@
 				on:input={() => validateUsername(userInputs.username)}
 				type="text"
 				name="username"
-				placeholder={`${$role} ID`}
+				placeholder={`${$role.charAt(0).toUpperCase() + $role.slice(1).toLowerCase()} ID`}
 				required
 				autocomplete="off"
 				class={`${
 					!usernameError ? 'ring-red-500' : 'ring-blue-500'
 				} w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2  focus:border-transparent bg-white text-black`}
 			/>
-			<p class:hidden={usernameError} class="text-xs p-1 text-red-500">
-				{`${$role} ID should not contain special characters`}
-			</p>
+			{#if !usernameError}
+				<p class="text-xs p-1 text-red-500">
+					{`${$role} ID should not contain special characters.`}
+				</p>
+			{/if}
 		</div>
 
 		<!-- Password Input -->
-		<div class="relative">
-			{#if $isVisible}
-				<input
-					type="text"
-					name="password"
-					bind:value={userInputs.password}
-					placeholder="Password"
-					autocomplete="off"
-					required
-					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
-					id="password-text"
-				/>
-			{:else}
-				<input
-					type="password"
-					name="password"
-					bind:value={userInputs.password}
-					placeholder="Password"
-					autocomplete="off"
-					required
-					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
-					id="password-password"
-				/>
+		<div>
+			<div class="relative">
+				{#if $isVisible}
+					<input
+						type="text"
+						name="password"
+						bind:value={userInputs.password}
+						placeholder="Password"
+						autocomplete="off"
+						required
+						class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+						id="password-text"
+					/>
+				{:else}
+					<input
+						type="password"
+						name="password"
+						bind:value={userInputs.password}
+						placeholder="Password"
+						autocomplete="off"
+						required
+						class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+						id="password-password"
+					/>
+				{/if}
+				<Eye />
+			</div>
+			{#if userInputs.password.length > 0 && userInputs.password.length < 6}
+				<p class="text-xs p-1 text-red-500">Password should be more than 6 characters long.</p>
 			{/if}
-
-			<Eye />
 		</div>
 
 		<!-- Check password input -->
-		<div class="relative">
-			{#if $isVisible}
-				<input
-					on:keyup={checkPassword}
-					bind:value={confirmPassword}
-					type="text"
-					name="password"
-					placeholder="Confirm password"
-					autocomplete="off"
-					required
-					class={`${
-						passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
-					} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
-					id="password"
-				/>
-			{:else}
-				<input
-					on:keyup={checkPassword}
-					bind:value={confirmPassword}
-					type="password"
-					name="password"
-					placeholder="Confirm password"
-					autocomplete="off"
-					required
-					class={`${
-						passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
-					} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
-					id="password"
-				/>
+		<div>
+			<div class="relative">
+				{#if $isVisible}
+					<input
+						on:keyup={checkPassword}
+						bind:value={confirmPassword}
+						type="text"
+						name="password"
+						placeholder="Confirm password"
+						autocomplete="off"
+						required
+						class={`${
+							passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
+						} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
+						id="password"
+					/>
+				{:else}
+					<input
+						on:keyup={checkPassword}
+						bind:value={confirmPassword}
+						type="password"
+						name="password"
+						placeholder="Confirm password"
+						autocomplete="off"
+						required
+						class={`${
+							passwordError ? 'focus:ring-red-500' : 'focus:ring-blue-500'
+						} w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:border-transparent bg-white text-black`}
+						id="password"
+					/>
+				{/if}
+				<Eye />
+			</div>
+			{#if passwordError}
+				<p class="text-xs p-1 text-red-500">Passwords do not match!</p>
 			{/if}
-
-			<Eye />
 		</div>
 
 		<Button>Sign Up</Button>

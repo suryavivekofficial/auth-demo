@@ -32,5 +32,7 @@
 		required
 		{checked}
 	/>
-	<label for={selectedRole} class="cursor-pointer pointer-events-none">{selectedRole}</label>
+	<label for={selectedRole} class="cursor-pointer pointer-events-none">
+		{selectedRole.charAt(0).toUpperCase() + selectedRole.slice(1).toLowerCase()}
+	</label>
 </button>

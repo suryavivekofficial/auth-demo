@@ -145,7 +145,7 @@
 		<input
 			type="text"
 			name="username"
-			placeholder={`${$role} ID`}
+			placeholder={`${$role.charAt(0).toUpperCase() + $role.slice(1).toLowerCase()} ID`}
 			required
 			autocomplete="off"
 			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"

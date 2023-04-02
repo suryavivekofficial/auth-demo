@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
 
-export type RoleType = 'User' | 'Admin';
+export type RoleType = 'USER' | 'ADMIN';
 
-export const role = writable<RoleType>('User');
+export const role = writable<RoleType>('USER');

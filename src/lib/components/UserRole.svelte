@@ -5,6 +5,6 @@
 </script>
 
 <div class="flex h-12 w-80 justify-between items-center gap-4">
-	<RoleBtn selectedRole="User" />
-	<RoleBtn selectedRole="Admin" />
+	<RoleBtn selectedRole="USER" />
+	<RoleBtn selectedRole="ADMIN" />
 </div>
