@@ -9,6 +9,7 @@
 	let confirmPassword: string;
 	let passwordError = false;
 	let usernameError = true;
+	let isUsernameAvailable = true;
 
 	type userInputsType = {
 		fullName: string;
@@ -32,9 +33,14 @@
 		console.log(await res.json());
 	};
 
-	const validateUsername = (username: string) => {
+	const validateUsername = async (username: string) => {
 		const regex = /^[a-zA-Z0-9_]+$/;
 		if (username.trim().length !== 0) usernameError = regex.test(username);
+
+		const usernameInDB = await fetch(`/api/username?username=${username}`);
+		const data = await usernameInDB.json();
+
+		isUsernameAvailable = data['isUsernameAvailable'];
 	};
 
 	const checkPassword = () => {
@@ -83,10 +89,16 @@
 					!usernameError ? 'ring-red-500' : 'ring-blue-500'
 				} w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2  focus:border-transparent bg-white text-black`}
 			/>
-			{#if !usernameError}
+			{#if !usernameError && userInputs.username.length > 0}
 				<p class="text-xs p-1 text-red-500">
-					{`${$role} ID should not contain special characters.`}
+					{`${
+						$role.charAt(0).toUpperCase() + $role.slice(1).toLowerCase()
+					} ID should not contain special characters.`}
 				</p>
+			{/if}
+
+			{#if !isUsernameAvailable}
+				<p class="text-xs p-1 text-red-500">Username not available</p>
 			{/if}
 		</div>
 

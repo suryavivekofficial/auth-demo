@@ -33,7 +33,7 @@ export const post = async ({ request }) => {
 		const user = await prisma.user.create({
 			data: {
 				name: body.fullName,
-				username: body.username,
+				username: body.username.toLowerCase(),
 				role: body.role,
 				password: {
 					create: {
