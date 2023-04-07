@@ -5,11 +5,13 @@
 	import UserRole from '$lib/components/UserRole.svelte';
 	import { role, type RoleType } from '$lib/stores/roleStore';
 	import { isVisible } from '$lib/stores/visibilityStore';
+	import Loader from '$lib/components/Loader.svelte';
 
 	let confirmPassword: string;
 	let passwordError = false;
 	let usernameError = true;
 	let isUsernameAvailable = true;
+	let loading = false;
 
 	type userInputsType = {
 		fullName: string;
@@ -25,12 +27,16 @@
 		role: $role
 	};
 
+	role.subscribe((value) => (userInputs.role = value));
+
 	const handleSubmit = async (event) => {
+		loading = true;
 		const res = await fetch('/api/users', {
 			method: 'POST',
 			body: JSON.stringify(userInputs)
 		});
 		console.log(await res.json());
+		loading = false;
 	};
 
 	const validateUsername = async (username: string) => {
@@ -98,7 +104,7 @@
 			{/if}
 
 			{#if !isUsernameAvailable}
-				<p class="text-xs p-1 text-red-500">Username not available</p>
+				<p class="text-xs p-1 text-red-500">Username not available!</p>
 			{/if}
 		</div>
 
@@ -174,6 +180,12 @@
 			{/if}
 		</div>
 
-		<Button>Sign Up</Button>
+		{#if loading}
+			<Button>
+				<Loader />
+			</Button>
+		{:else}
+			<Button>Sign Up</Button>
+		{/if}
 	</form>
 </div>
