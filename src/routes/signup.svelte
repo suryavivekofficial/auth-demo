@@ -3,9 +3,12 @@
 	import Eye from '$lib/components/Eye.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import UserRole from '$lib/components/UserRole.svelte';
+	import Loader from '$lib/components/Loader.svelte';
+	import Modal from '$lib/components/Modal.svelte';
+
 	import { role, type RoleType } from '$lib/stores/roleStore';
 	import { isVisible } from '$lib/stores/visibilityStore';
-	import Loader from '$lib/components/Loader.svelte';
+	import { openPopup } from '$lib/stores/popupStore';
 
 	let confirmPassword: string;
 	let passwordError = false;
@@ -31,12 +34,14 @@
 
 	const handleSubmit = async (event) => {
 		loading = true;
+		validateUsername(userInputs.username);
 		const res = await fetch('/api/users', {
 			method: 'POST',
 			body: JSON.stringify(userInputs)
 		});
 		console.log(await res.json());
 		loading = false;
+		openPopup();
 	};
 
 	const validateUsername = async (username: string) => {
@@ -57,6 +62,7 @@
 </script>
 
 <Nav url="/login" />
+<Modal msg={'Login successful'} success={true} />
 
 <div class="w-screen flex flex-col justify-center">
 	<div class="mt-8">
