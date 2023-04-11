@@ -10,6 +10,7 @@
 	import { isVisible } from '$lib/stores/visibilityStore';
 	import { openPopup } from '$lib/stores/popupStore';
 	import { loginUser } from '$lib/stores/sessionStore';
+	import { goto } from '$app/navigation';
 
 	let confirmPassword: string;
 	let passwordError = false;
@@ -48,6 +49,7 @@
 			isSuccess = true;
 			//set user data as state
 			loginUser(data.user);
+			goto('/profile');
 		} else {
 			isSuccess = false;
 		}
