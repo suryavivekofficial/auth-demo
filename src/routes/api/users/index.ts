@@ -46,5 +46,11 @@ export const post = async ({ request }) => {
 		};
 	} catch (error) {
 		console.error(error);
+		return {
+			status: 400,
+			body: {
+				success: false
+			}
+		};
 	}
 };

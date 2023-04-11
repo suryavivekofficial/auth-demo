@@ -6,5 +6,5 @@ export function openPopup() {
 	isPopup.set(true);
 	setTimeout(() => {
 		isPopup.set(false);
-	}, 3000);
+	}, 5000);
 }

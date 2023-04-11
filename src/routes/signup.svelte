@@ -4,26 +4,21 @@
 	import Nav from '$lib/components/Nav.svelte';
 	import UserRole from '$lib/components/UserRole.svelte';
 	import Loader from '$lib/components/Loader.svelte';
-	import Modal from '$lib/components/Modal.svelte';
+	import Popup from '$lib/components/Popup.svelte';
 
 	import { role, type RoleType } from '$lib/stores/roleStore';
 	import { isVisible } from '$lib/stores/visibilityStore';
 	import { openPopup } from '$lib/stores/popupStore';
+	import { loginUser } from '$lib/stores/sessionStore';
 
 	let confirmPassword: string;
 	let passwordError = false;
 	let usernameError = true;
 	let isUsernameAvailable = true;
 	let loading = false;
+	let isSuccess: boolean;
 
-	type userInputsType = {
-		fullName: string;
-		username: string;
-		password: string;
-		role: RoleType;
-	};
-
-	const userInputs: userInputsType = {
+	const userInputs = {
 		fullName: '',
 		username: '',
 		password: '',
@@ -32,6 +27,14 @@
 
 	role.subscribe((value) => (userInputs.role = value));
 
+	const clearInputs = () => {
+		userInputs.fullName = '';
+		userInputs.username = '';
+		userInputs.password = '';
+		confirmPassword = '';
+		role.set('USER');
+	};
+
 	const handleSubmit = async (event) => {
 		loading = true;
 		validateUsername(userInputs.username);
@@ -39,9 +42,18 @@
 			method: 'POST',
 			body: JSON.stringify(userInputs)
 		});
-		console.log(await res.json());
+		const data = await res.json();
+		console.log(data);
+		if (data.success) {
+			isSuccess = true;
+			//set user data as state
+			loginUser(data.user);
+		} else {
+			isSuccess = false;
+		}
 		loading = false;
 		openPopup();
+		clearInputs();
 	};
 
 	const validateUsername = async (username: string) => {
@@ -62,7 +74,12 @@
 </script>
 
 <Nav url="/login" />
-<Modal msg={'Login successful'} success={true} />
+
+{#if isSuccess}
+	<Popup msg={'Sign up successful'} success={true} />
+{:else}
+	<Popup msg={'Something went wrong!'} success={false} />
+{/if}
 
 <div class="w-screen flex flex-col justify-center">
 	<div class="mt-8">
