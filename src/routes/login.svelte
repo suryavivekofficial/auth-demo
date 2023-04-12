@@ -15,7 +15,9 @@
 	// let password,
 	// 	userFound = true,
 	// 	incorrectPassword = true;
-	// loading = false;
+	let loading = false;
+	let username = '';
+	let password = '';
 
 	// const toggleVisibility = () => {
 	// 	if (password.type === 'password') {
@@ -43,31 +45,33 @@
 	// 	}
 	// };
 
-	// const handleSubmit = async (e) => {
-	// 	loading = true;
-	// 	const formData = new FormData(e.target);
-	// 	const data = {};
-	// 	for (let field of formData) {
-	// 		const [key, value] = field;
-	// 		data[key] = value;
-	// 	}
-	// 	const res = await fetch('/api/login', {
-	// 		method: 'POST',
-	// 		body: JSON.stringify(data)
-	// 	});
-	// 	const body = await res.json();
-	// 	if (body.ok) {
-	// 		$session.user = body.user;
-	// 		await goto(`/${body.user.role}`);
-	// 	} else {
-	// 		if (body.message === 'User not found') {
-	// 			userFound = false;
-	// 		} else if (body.message === 'Incorrect password') {
-	// 			incorrectPassword = false;
-	// 		}
-	// 	}
-	// 	loading = false;
-	// };
+	const handleSubmit = async () => {
+		loading = true;
+		// const formData = new FormData(e.target);
+		// const data = {};
+		// for (let field of formData) {
+		// 	const [key, value] = field;
+		// 	data[key] = value;
+		// }
+		const res = await fetch('/api/login', {
+			method: 'POST',
+			body: JSON.stringify({ username, password, $role })
+		});
+		const body = await res.json();
+		console.log(body);
+
+		// if (body.ok) {
+		// 	$session.user = body.user;
+		// 	await goto(`/${body.user.role}`);
+		// } else {
+		// 	if (body.message === 'User not found') {
+		// 		userFound = false;
+		// 	} else if (body.message === 'Incorrect password') {
+		// 		incorrectPassword = false;
+		// 	}
+		// }
+		loading = false;
+	};
 
 	// const showOverlay = () => {
 	// 	isOverlay.set(true);
@@ -90,59 +94,13 @@
 	</div>
 
 	<form
-		on:submit|preventDefault={() => console.log('handle submit')}
+		on:submit|preventDefault={handleSubmit}
 		class="flex justify-center items-center flex-col gap-y-10 p-10"
 	>
 		<UserRole />
-		<!-- <div class="flex h-12 w-80 justify-between items-center">
-				<button
-					type="button"
-					on:click|preventDefault={() => console.log('select role')}
-					class="cursor-pointer flex justify-center items-center outline-none"
-				>
-					<input
-						type="radio"
-						id="user"
-						name="role"
-						value="user"
-						class="pointer-events-none hidden"
-						required
-						{checked}
-					/>
-					<label for="user" class="cursor-pointer pointer-events-none">User</label>
-				</button>
 
-				<button
-					type="button"
-					on:click|preventDefault={() => console.log('select role')}
-					class="cursor-pointer flex justify-center items-center outline-none"
-				>
-					<input
-						type="radio"
-						id="admin"
-						name="role"
-						value="admin"
-						class="pointer-events-none hidden"
-						required
-						checked={!checked}
-					/>
-					<label for="admin" class="cursor-pointer pointer-events-none">Admin</label>
-				</button>
-			</div> -->
-
-		<!-- <div
-				class="py-2 px-4 rounded outline-none border border-black flex justify-center items-center"
-			>
-				<input
-					type="text"
-					name="id"
-					placeholder={`${placeholder} ID`}
-					required
-					pattern="\d\d[a-zA-Z]\d\d[a-zA-Z]\d\d\d\d"
-					class=""
-				/>
-			</div> -->
 		<input
+			bind:value={username}
 			type="text"
 			name="username"
 			placeholder={`${$role.charAt(0).toUpperCase() + $role.slice(1).toLowerCase()} ID`}
@@ -150,41 +108,33 @@
 			autocomplete="off"
 			class="w-80 px-4 py-2 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
 		/>
-		<div class="relative">
-			<input
-				type={$isVisible ? `text` : `password`}
-				name="password"
-				placeholder="Password"
-				autocomplete="off"
-				required
-				class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
-				id="password"
-			/>
-			<Eye />
-		</div>
-		<Button>Login</Button>
 
-		<!-- {#if !userFound}
-				<p>User not found!!!</p>
-			{/if} -->
-		<!-- <div class="flex">
+		<div class="relative">
+			{#if $isVisible}
 				<input
+					bind:value={password}
+					type="text"
+					name="password"
+					placeholder="Password"
+					autocomplete="off"
+					required
+					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+					id="password"
+				/>
+			{:else}
+				<input
+					bind:value={password}
 					type="password"
 					name="password"
 					placeholder="Password"
+					autocomplete="off"
 					required
-					bind:this={password}
-					class="py-2 pl-4 pr-10 rounded outline-none border border-black"
+					class="w-80 px-4 py-2 pr-12 rounded-md shadow-sm border border-gray-300 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent bg-white text-black"
+					id="password"
 				/>
-				<Eye />
-			</div> -->
-		<!-- {#if !incorrectPassword}
-				<p>Incorrect Password</p>
 			{/if}
-			<input
-				type="submit"
-				value="Login to your account"
-				class="py-2 px-8 min-w-1/2 rounded outline-none cursor-pointer bg-black text-white border border-black hover:bg-white hover:text-black hover:px-12 duration-300"
-			/> -->
+			<Eye />
+		</div>
+		<Button>Login</Button>
 	</form>
 </div>

@@ -22,8 +22,6 @@ export const post = async ({ request }) => {
 	const body = await request.json();
 
 	const hashedPassword = await bcrypt.hash(body.password, 10);
-
-	// const validPass = await bcrypt.compare(body.password, hashedPassword);
 	try {
 		const user = await prisma.user.create({
 			data: {

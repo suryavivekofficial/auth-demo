@@ -11,6 +11,7 @@
 	import { openPopup } from '$lib/stores/popupStore';
 	import { loginUser } from '$lib/stores/sessionStore';
 	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
 
 	let confirmPassword: string;
 	let passwordError = false;
@@ -48,7 +49,8 @@
 		if (data.success) {
 			isSuccess = true;
 			//set user data as state
-			loginUser(data.user);
+			// loginUser(data.user);
+			$session.user = data.user;
 			goto('/profile');
 		} else {
 			isSuccess = false;

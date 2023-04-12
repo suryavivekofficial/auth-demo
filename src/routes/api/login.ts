@@ -13,7 +13,7 @@ export const post: RequestHandler = async (event) => {
 	try {
 		const user = await prisma.user.findUnique({
 			where: {
-				rollNo: body.id
+				username: body.username
 			}
 		});
 
@@ -27,13 +27,13 @@ export const post: RequestHandler = async (event) => {
 			};
 		}
 
-		const { hashedPassword } = await prisma.passwords.findUnique({
+		const { password } = await prisma.password.findUnique({
 			where: {
-				user_id: user.id
+				userId: user.id
 			}
 		});
 
-		const validPass = await bcrypt.compare(body.password, hashedPassword);
+		const validPass = await bcrypt.compare(body.password, password);
 
 		if (!validPass) {
 			return {
