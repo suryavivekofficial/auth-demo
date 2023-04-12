@@ -1,8 +1,6 @@
 import { prisma } from '$lib/utils/prisma';
 
 export const get = async ({ url }) => {
-	console.log(url.searchParams.get('username'));
-
 	const usernameFromClient = url.searchParams.get('username');
 
 	const user = await prisma.user.findUnique({

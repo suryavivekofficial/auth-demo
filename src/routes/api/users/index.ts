@@ -47,7 +47,8 @@ export const post = async ({ request }) => {
 		return {
 			status: 400,
 			body: {
-				success: false
+				success: false,
+				error
 			}
 		};
 	}

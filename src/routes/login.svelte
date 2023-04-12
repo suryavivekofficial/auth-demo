@@ -26,12 +26,12 @@
 			body: JSON.stringify({ username, password, role: $role })
 		});
 		const body = await res.json();
-		console.log(body);
 
 		if (body.success) {
 			$session.user = body.user;
 			await goto(`/profile`);
 		} else {
+			console.log(body);
 			msg = body.message;
 			openPopup();
 		}

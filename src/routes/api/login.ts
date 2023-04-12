@@ -77,7 +77,8 @@ export const post = async (event) => {
 			status: 500,
 			body: {
 				success: false,
-				message: 'Something went wrong'
+				message: 'Something went wrong',
+				err
 			}
 		};
 	}

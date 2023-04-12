@@ -45,7 +45,6 @@
 			body: JSON.stringify(userInputs)
 		});
 		const data = await res.json();
-		console.log(data);
 		if (data.success) {
 			isSuccess = true;
 			//set user data as state
@@ -53,6 +52,7 @@
 			$session.user = data.user;
 			goto('/profile');
 		} else {
+			console.log(data);
 			isSuccess = false;
 		}
 		loading = false;

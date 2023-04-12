@@ -11,9 +11,6 @@
 		const data = await response.json();
 		const user = data.user;
 
-		console.log('from script module');
-		console.log(user);
-
 		return {
 			props: {
 				user
