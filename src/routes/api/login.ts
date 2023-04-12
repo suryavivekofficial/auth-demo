@@ -1,15 +1,12 @@
-import type { RequestHandler } from '@sveltejs/kit';
 import { prisma } from '$lib/utils/prisma';
 import 'dotenv/config';
 import jwt from 'jsonwebtoken';
 import { serialize } from 'cookie';
 import bcrypt from 'bcryptjs';
 
-// const { sign } = jwt;
-// const prisma = new PrismaClient();
-
-export const post: RequestHandler = async (event) => {
+export const post = async (event) => {
 	const body = await event.request.json();
+
 	try {
 		const user = await prisma.user.findUnique({
 			where: {
@@ -19,10 +16,20 @@ export const post: RequestHandler = async (event) => {
 
 		if (!user) {
 			return {
-				status: 404,
+				status: 403,
 				body: {
 					success: false,
 					message: 'User not found'
+				}
+			};
+		}
+
+		if (user.role !== body.role) {
+			return {
+				status: 403,
+				body: {
+					success: false,
+					message: 'Wrong role selected'
 				}
 			};
 		}
@@ -37,7 +44,7 @@ export const post: RequestHandler = async (event) => {
 
 		if (!validPass) {
 			return {
-				status: 404,
+				status: 403,
 				body: {
 					success: false,
 					message: 'Incorrect password'
@@ -66,6 +73,12 @@ export const post: RequestHandler = async (event) => {
 			}
 		};
 	} catch (err) {
-		console.error(err);
+		return {
+			status: 500,
+			body: {
+				success: false,
+				message: 'Something went wrong'
+			}
+		};
 	}
 };

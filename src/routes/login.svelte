@@ -23,7 +23,7 @@
 
 		const res = await fetch('/api/login', {
 			method: 'POST',
-			body: JSON.stringify({ username, password, $role })
+			body: JSON.stringify({ username, password, role: $role })
 		});
 		const body = await res.json();
 		console.log(body);
