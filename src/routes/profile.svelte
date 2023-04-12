@@ -27,13 +27,14 @@
 	let loading = false;
 
 	const handleLogout = async () => {
+		console.log('in logout func');
 		loading = true;
 		const res = await fetch('/api/logout', {
 			method: 'POST'
 		});
 
 		loading = false;
-		await goto('/login');
+		goto('/login');
 	};
 
 	export let user;
@@ -59,7 +60,7 @@
 		</div>
 	</div>
 
-	<form on:submit={handleLogout}>
+	<form on:submit|preventDefault={handleLogout}>
 		{#if loading}
 			<Button>
 				<Loader />
