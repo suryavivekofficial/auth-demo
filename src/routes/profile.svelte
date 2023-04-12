@@ -24,14 +24,18 @@
 
 <script lang="ts">
 	import { goto } from '$app/navigation';
-
 	import Button from '$lib/components/Button.svelte';
+	import Loader from '$lib/components/Loader.svelte';
+
+	let loading = false;
 
 	const handleLogout = async () => {
+		loading = true;
 		const res = await fetch('/api/logout', {
 			method: 'POST'
 		});
 
+		loading = false;
 		await goto('/login');
 	};
 
@@ -58,12 +62,15 @@
 		</div>
 	</div>
 
-	<button
-		on:click={handleLogout}
-		class="flex justify-center items-center bg-slate-700 hover:bg-slate-600 outline-none text-white font-semibold py-2 px-4 rounded duration-300 focus-visible:ring-2 focus-visible:ring-blue-500"
-	>
-		Logout
-	</button>
+	<form on:submit={handleLogout}>
+		{#if loading}
+			<Button>
+				<Loader />
+			</Button>
+		{:else}
+			<Button>Logout</Button>
+		{/if}
+	</form>
 </div>
 
 <style>
