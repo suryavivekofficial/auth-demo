@@ -1,58 +1,26 @@
 <script lang="ts">
-	// import { goto } from '$app/navigation';
-	// import { session } from '$app/stores';
-	// import Loading from '$lib/components/Loading.svelte';
-	// import Overlay from '$lib/components/Overlay.svelte';
-	// import { isOverlay } from '$lib/stores/overlayStore';
+	import { goto } from '$app/navigation';
+	import { session } from '$app/stores';
+
 	import Eye from '$lib/components/Eye.svelte';
 	import Button from '$lib/components/Button.svelte';
 	import Nav from '$lib/components/Nav.svelte';
 	import UserRole from '$lib/components/UserRole.svelte';
+	import Popup from '$lib/components/Popup.svelte';
+	import Loader from '$lib/components/Loader.svelte';
 
 	import { role } from '$lib/stores/roleStore';
 	import { isVisible } from '$lib/stores/visibilityStore';
+	import { openPopup } from '$lib/stores/popupStore';
 
-	// let password,
-	// 	userFound = true,
-	// 	incorrectPassword = true;
+	let msg: '';
 	let loading = false;
 	let username = '';
 	let password = '';
 
-	// const toggleVisibility = () => {
-	// 	if (password.type === 'password') {
-	// 		password.type = 'text';
-	// 		eye.classList.add('hidden');
-	// 		eyeSlash.classList.remove('hidden');
-	// 	} else {
-	// 		password.type = 'password';
-	// 		eye.classList.remove('hidden');
-	// 		eyeSlash.classList.add('hidden');
-	// 	}
-	// };
-
-	// let checked = true;
-	// let placeholder;
-	// type RoleType = 'user' | 'admin';
-	// let role: RoleType = 'user';
-	// $: placeholder = role.charAt(0).toUpperCase() + role.slice(1);
-	// const selectRole = (event) => {
-	// 	const btn = event.target;
-	// 	const input = btn.childNodes[0];
-	// 	role = input.value;
-	// 	if (!input.checked) {
-	// 		checked = !checked;
-	// 	}
-	// };
-
 	const handleSubmit = async () => {
 		loading = true;
-		// const formData = new FormData(e.target);
-		// const data = {};
-		// for (let field of formData) {
-		// 	const [key, value] = field;
-		// 	data[key] = value;
-		// }
+
 		const res = await fetch('/api/login', {
 			method: 'POST',
 			body: JSON.stringify({ username, password, $role })
@@ -60,31 +28,18 @@
 		const body = await res.json();
 		console.log(body);
 
-		// if (body.ok) {
-		// 	$session.user = body.user;
-		// 	await goto(`/${body.user.role}`);
-		// } else {
-		// 	if (body.message === 'User not found') {
-		// 		userFound = false;
-		// 	} else if (body.message === 'Incorrect password') {
-		// 		incorrectPassword = false;
-		// 	}
-		// }
+		if (body.success) {
+			$session.user = body.user;
+			await goto(`/profile`);
+		} else {
+			msg = body.message;
+			openPopup();
+		}
 		loading = false;
 	};
-
-	// const showOverlay = () => {
-	// 	isOverlay.set(true);
-	// };
 </script>
 
-<!-- {#if loading}
-	<Loading />
-{/if} -->
-
-<!-- {#if $isOverlay}
-	<Overlay />
-{/if} -->
+<Popup {msg} success={false} />
 
 <Nav url="/signup" />
 
@@ -135,6 +90,12 @@
 			{/if}
 			<Eye />
 		</div>
-		<Button>Login</Button>
+		{#if loading}
+			<Button>
+				<Loader />
+			</Button>
+		{:else}
+			<Button>Login</Button>
+		{/if}
 	</form>
 </div>

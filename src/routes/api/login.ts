@@ -21,7 +21,7 @@ export const post: RequestHandler = async (event) => {
 			return {
 				status: 404,
 				body: {
-					ok: false,
+					success: false,
 					message: 'User not found'
 				}
 			};
@@ -39,7 +39,7 @@ export const post: RequestHandler = async (event) => {
 			return {
 				status: 404,
 				body: {
-					ok: false,
+					success: false,
 					message: 'Incorrect password'
 				}
 			};
@@ -60,7 +60,7 @@ export const post: RequestHandler = async (event) => {
 				})
 			},
 			body: {
-				ok: true,
+				success: true,
 				message: 'user found',
 				user
 			}

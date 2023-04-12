@@ -2,7 +2,7 @@
 	import Check from './Check.svelte';
 	import Xmark from './Xmark.svelte';
 	import { fly } from 'svelte/transition';
-	import { isPopup, openPopup } from '$lib/stores/popupStore';
+	import { isPopup } from '$lib/stores/popupStore';
 
 	export let msg: string;
 	export let success: boolean;
